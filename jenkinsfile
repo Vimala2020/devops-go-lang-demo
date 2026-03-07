@@ -40,5 +40,13 @@ pipeline{
             }
         }
 
+        stage('SonarQube Scan') {
+            steps {
+                withSonarQubeEnv('sonarqube') { // 'sonarqube' = configured server in Jenkins
+                sh 'sonar-scanner -Dsonar.projectKey=devops-demo -Dsonar.sources=.'
+        }
+    }
+}
+
     }
 }
