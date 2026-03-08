@@ -10,11 +10,6 @@ pipeline {
         IMAGE_NAME = 'vimala92/devops-pipeline-demo'
     }
 
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-        IMAGE_NAME = 'vimala92/devops-pipeline-demo'
-    }
-
     stages {
 
         stage('Checkout') {
