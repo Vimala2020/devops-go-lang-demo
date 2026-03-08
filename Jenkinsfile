@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    agent docker {
+            image 'golang:1.21' // official Go image
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
