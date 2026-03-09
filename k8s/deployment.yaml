@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: devops-pipeline-demo
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: devops-pipeline-demo
@@ -12,7 +13,7 @@ spec:
         app: devops-pipeline-demo
     spec:
       containers:
-      - name: devops-pipeline-demo
-        image: vimala92/devops-pipeline-demo:v1
-        ports:
-        - containerPort: 8080
+        - name: devops-pipeline-demo
+          image: vimala92/devops-pipeline-demo:v1
+          ports:
+            - containerPort: 8080

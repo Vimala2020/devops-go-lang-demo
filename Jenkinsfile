@@ -1,10 +1,5 @@
 pipeline {
-     agent {
-        docker {
-            image 'golang:1.21' // official Go image
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    }
+     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         IMAGE_NAME = 'vimala92/devops-pipeline-demo'
