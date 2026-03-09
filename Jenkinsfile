@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Vimala2020/devops-go-lang-demo.git'
+                git branch: 'main', url: 'https://github.com/Vimala2020/devops-go-lang-demo.git'
             }
         }
 
