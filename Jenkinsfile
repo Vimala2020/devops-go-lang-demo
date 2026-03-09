@@ -1,21 +1,22 @@
 pipeline {
-     agent any
+    agent any
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         IMAGE_NAME = 'vimala92/devops-pipeline-demo'
     }
 
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Vimala2020/devops-go-lang-demo.git'
+                git 'https://github.com/Vimala2020/devops-go-lang-demo.git'
             }
         }
 
-        stage('Build') {
+        stage('Build Go App') {
             steps {
-                sh 'go build -o main .'
+                sh 'go version'        // verify Go is installed
+                sh 'go build -o main .' 
             }
         }
 
@@ -25,14 +26,10 @@ pipeline {
             }
         }
 
-        stage('Docker Build') {
+        stage('Docker Build & Push') {
             steps {
+                sh 'docker version'    // verify Docker access
                 sh 'docker build -t $IMAGE_NAME:v1 .'
-            }
-        }
-
-        stage('Docker Push') {
-            steps {
                 withDockerRegistry([credentialsId: 'dockerhub-creds', url: '']) {
                     sh 'docker push $IMAGE_NAME:v1'
                 }
@@ -45,14 +42,5 @@ pipeline {
                 sh 'kubectl apply -f k8s/service.yaml'
             }
         }
-
-        stage('SonarQube Scan') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh 'sonar-scanner -Dsonar.projectKey=devops-demo -Dsonar.sources=.'
-                }
-            }
-        }
-
     }
 }
