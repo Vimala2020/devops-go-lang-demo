@@ -14,16 +14,14 @@ pipeline {
         }
 
         stage('Build Go App') {
-            agent {
-                docker {
-                    image 'golang:1.21'
-                }
-            }
             steps {
+                withEnv(['GOCACHE=/tmp/.cache/go-build']) {
+                sh 'mkdir -p $GOCACHE'
                 sh 'go version'
                 sh 'go build -o main .'
-            }
         }
+    }
+}
 
         stage('Run Tests') {
             agent {
